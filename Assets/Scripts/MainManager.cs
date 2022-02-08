@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainManager : MonoBehaviour
 {
@@ -18,10 +19,14 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
+    public Text playerName;
+
     
     // Start is called before the first frame update
     void Start()
     {
+        playerPer();
+
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -72,5 +77,10 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+    }
+
+    void playerPer()
+    {
+        playerName.text = Perfil.Instance.namePlayer;
     }
 }
