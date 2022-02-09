@@ -20,6 +20,7 @@ public class MainManager : MonoBehaviour
     private bool m_GameOver = false;
 
     public Text playerName;
+    public Text playerHighScore;
 
     
     // Start is called before the first frame update
@@ -65,6 +66,8 @@ public class MainManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+        HighScore();
+        ShowHighScore();
     }
 
     void AddPoint(int point)
@@ -82,5 +85,19 @@ public class MainManager : MonoBehaviour
     void playerPer()
     {
         playerName.text = Perfil.Instance.namePlayer;
+    }
+
+    void HighScore()
+    {
+        if (m_Points > Perfil.Instance.highScore)
+        {
+            Perfil.Instance.highScore = m_Points;
+            Perfil.Instance.SavePerfil();
+        }
+    }
+
+    void ShowHighScore()
+    {
+        playerHighScore.text = Perfil.Instance.highScore.ToString();
     }
 }

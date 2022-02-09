@@ -9,10 +9,11 @@ public class Perfil : MonoBehaviour
     public static Perfil Instance;
     public TextMeshProUGUI nameInput;
     public string namePlayer;
+    public int highScore;
 
     void Start()
     {
-        LoadName();
+        LoadPerfil();
     }
 
     void Update()
@@ -34,10 +35,10 @@ public class Perfil : MonoBehaviour
 
     void InputName()
     {
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             namePlayer = nameInput.text;
-            SaveName();
+            SavePerfil();
         }
     }
 
@@ -45,24 +46,28 @@ public class Perfil : MonoBehaviour
     class SaveData
     {
         public string namePlayer;
+        public int highScore;
     }
 
-    public void SaveName()
+    public void SavePerfil()
     {
         SaveData perfilPlayer = new SaveData();
         perfilPlayer.namePlayer = namePlayer;
-        string nameJson = JsonUtility.ToJson(perfilPlayer);
-        File.WriteAllText(Application.persistentDataPath + "/savefile.json", nameJson);
+        perfilPlayer.highScore = highScore;
+        string json = JsonUtility.ToJson(perfilPlayer);
+        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
     }
 
-    public void LoadName()
+
+    public void LoadPerfil()
     {
         string path = Application.persistentDataPath + "/savefile.json";
         if (File.Exists(path))
         {
-            string nameJson = File.ReadAllText(path);
-            SaveData perfilPlayer = JsonUtility.FromJson<SaveData>(nameJson);
+            string json = File.ReadAllText(path);
+            SaveData perfilPlayer = JsonUtility.FromJson<SaveData>(json);
             namePlayer = perfilPlayer.namePlayer;
+            highScore = perfilPlayer.highScore;
         }
     }
 }
